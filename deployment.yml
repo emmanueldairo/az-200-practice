@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: customerportal-deployment
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: customerportal
+
+  template:
+    metadata:
+      labels:
+        app: customerportal
+
+    spec:
+      containers:
+        - name: customerportal
+          image: cloudxeusdev.azurecr.io/customerportal:ca2
+
+          ports:
+            - containerPort: 8000
+
+---
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: customerportal-service
+
+spec:
+  type: LoadBalancer
+
+  selector:
+    app: customerportal
+
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

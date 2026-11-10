@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: customerportal-deployment
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: customerportal
+
+  template:
+    metadata:
+      labels:
+        app: customerportal
+
+    spec:
+      containers:
+        - name: customerportal
+          image: cloudxeusdev.azurecr.io/customerportal:ca3
+
+          ports:
+            - containerPort: 8000
